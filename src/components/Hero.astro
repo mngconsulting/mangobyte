@@ -1,0 +1,117 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="top" class="hero">
+  <div class="container hero-inner">
+    <p class="label eyebrow">
+      <span class="dot" aria-hidden="true"></span>
+      {site.location}
+    </p>
+    <h1>
+      We build software.<br />
+      We keep it <span class="accent">running</span>.
+    </h1>
+    <p class="prose-measure lede">
+      MangoByte is a two-person studio in Cluj — {site.foundedExperience} across multiple industries,
+      one integrated capability: software development and DevOps under one roof.
+    </p>
+    <div class="cta-row">
+      <a class="btn-primary" href={`mailto:${site.contactEmail}`}>Get in touch</a>
+      <a class="btn-ghost" href="#services">See what we do</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-4xl) var(--space-3xl);
+  }
+
+  .hero-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    max-width: 52rem;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    text-transform: none;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-leaf);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-leaf) 25%, transparent);
+  }
+
+  h1 {
+    font-size: var(--text-display);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  .accent {
+    color: var(--color-mango);
+  }
+
+  .lede {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: var(--color-ink);
+    opacity: 0.88;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+  }
+
+  .btn-primary,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: box-shadow var(--duration-base) var(--ease-out-expo),
+      transform var(--duration-base) var(--ease-out-expo), background var(--duration-fast) ease-out;
+  }
+
+  .btn-primary {
+    background: var(--mango-fill);
+    color: var(--on-mango);
+  }
+
+  .btn-primary:hover {
+    box-shadow: var(--shadow-cta-hover);
+    transform: translateY(-1px);
+    background: var(--mango-fill-hover);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-leaf);
+  }
+
+  .btn-ghost:hover {
+    background: var(--color-surface);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-primary:hover {
+      transform: none;
+    }
+  }
+</style>

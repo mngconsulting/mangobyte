@@ -1,0 +1,111 @@
+---
+import { founders } from "../data/founders";
+import { site } from "../data/site";
+---
+
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-copy">
+        <h2>Say hello</h2>
+        <p class="prose-measure">
+          No forms, no funnels — just tell us what you're building or what's breaking.
+        </p>
+        <a class="mail-cta" href={`mailto:${site.contactEmail}`}>
+          {site.contactEmail}
+        </a>
+      </div>
+      <ul class="direct-emails" aria-label="Direct contact for each founder">
+        {
+          founders.map((founder) => (
+            <li>
+              <span class="label">{founder.name}</span>
+              <a href={`mailto:${founder.email}`}>{founder.email}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-block: var(--space-3xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .contact-copy h2 {
+    font-size: var(--text-headline);
+    letter-spacing: -0.015em;
+  }
+
+  .contact-copy p {
+    margin-top: var(--space-sm);
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .mail-cta {
+    display: inline-flex;
+    margin-top: var(--space-lg);
+    padding: 0.875rem 2rem;
+    border-radius: var(--radius-sm);
+    background: var(--mango-fill);
+    color: var(--on-mango);
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow var(--duration-base) var(--ease-out-expo),
+      transform var(--duration-base) var(--ease-out-expo);
+  }
+
+  .mail-cta:hover {
+    box-shadow: var(--shadow-cta-hover);
+    transform: translateY(-1px);
+  }
+
+  .direct-emails {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .direct-emails li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .direct-emails .label {
+    color: var(--color-muted);
+  }
+
+  .direct-emails a {
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    color: var(--color-leaf);
+    text-decoration: none;
+  }
+
+  .direct-emails a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 640px) {
+    .contact-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,53 @@
+---
+import { founders } from "../data/founders";
+import { site } from "../data/site";
+import FounderCard from "./FounderCard.astro";
+---
+
+<section id="about" class="about">
+  <div class="container">
+    <div class="section-head">
+      <h2>One studio, not two freelancers</h2>
+      <p class="prose-measure">
+        MangoByte is run by a married couple based in {site.location} — {site.foundedExperience} of
+        professional experience between them, spread across multiple industries. They work as one
+        unit: one builds, one runs, and the line between the two is deliberately thin.
+      </p>
+    </div>
+
+    <div class="founders-grid">
+      {founders.map((founder) => <FounderCard founder={founder} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-block: var(--space-3xl);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .section-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 44rem;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .section-head h2 {
+    font-size: var(--text-headline);
+    letter-spacing: -0.015em;
+  }
+
+  .section-head p {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
+
+  .founders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+  }
+</style>

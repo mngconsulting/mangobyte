@@ -1,0 +1,98 @@
+---
+import type { Founder } from "../data/founders";
+
+interface Props {
+  founder: Founder;
+}
+
+const { founder } = Astro.props;
+---
+
+<article class="founder-card">
+  <div class="avatar" role="img" aria-label={`${founder.name}, ${founder.headline}`}>
+    <span aria-hidden="true">{founder.initials}</span>
+  </div>
+  <div class="founder-body">
+    <p class="label">{founder.role}</p>
+    <h3>{founder.name}</h3>
+    <p class="headline">{founder.headline}</p>
+    <p class="bio prose-measure">{founder.bio}</p>
+    <ul class="stack" aria-label={`${founder.name}'s core technologies`}>
+      {founder.stack.map((item) => <li>{item}</li>)}
+    </ul>
+    <a class="founder-email" href={`mailto:${founder.email}`}>{founder.email}</a>
+  </div>
+</article>
+
+<style>
+  .founder-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+  }
+
+  .avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in oklch, var(--color-mango) 22%, var(--color-surface));
+    color: var(--color-mango-bright);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  h3 {
+    font-size: var(--text-title);
+    margin-block: var(--space-3xs) 0;
+  }
+
+  .headline {
+    color: var(--color-muted);
+    font-size: var(--text-small);
+    margin-top: var(--space-3xs);
+  }
+
+  .bio {
+    margin-top: var(--space-sm);
+    line-height: 1.65;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+  }
+
+  .stack li {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.01em;
+    color: var(--color-leaf);
+    background: color-mix(in oklch, var(--color-leaf) 14%, transparent);
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .founder-email {
+    margin-top: var(--space-xs);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    color: var(--color-mango);
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .founder-email:hover {
+    text-decoration: underline;
+  }
+</style>

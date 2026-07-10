@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#181310"/>
+  <path d="M120 430c0-110 88-198 202-207 7 50-4 103-35 147-38 55-103 84-167 60z" fill="#c96a45"/>
+  <path d="M310 220c17-22 41-35 66-37-2 28-15 52-37 68-11-11-20-21-29-31z" fill="#5fa876"/>
+  <text x="120" y="330" font-family="Arial, sans-serif" font-size="88" font-weight="700" fill="#f5f0ea">MangoByte</text>
+  <text x="122" y="380" font-family="monospace" font-size="30" fill="#8a9e91">We build it. We run it.</text>
+  <text x="122" y="440" font-family="monospace" font-size="24" fill="#a9887a">mngconsulting.tech · Cluj, Romania</text>
+</svg>

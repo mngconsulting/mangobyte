@@ -1,0 +1,123 @@
+---
+import { nav, site } from "../data/site";
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a href="#top" class="wordmark">
+      Mango<span class="byte">Byte</span>
+    </a>
+    <nav aria-label="Section navigation">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a href={item.href} data-nav-link>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav-link]"));
+  const sections = links
+    .map((link) => document.querySelector(link.getAttribute("href") || ""))
+    .filter((el): el is Element => el !== null);
+
+  if ("IntersectionObserver" in window && sections.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const id = `#${entry.target.id}`;
+          links.forEach((link) => {
+            const isActive = link.getAttribute("href") === id;
+            link.toggleAttribute("aria-current", isActive);
+            if (isActive) link.setAttribute("aria-current", "true");
+          });
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-nav);
+    background: color-mix(in oklch, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-block: var(--space-sm);
+  }
+
+  .wordmark {
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    color: var(--color-ink);
+    white-space: nowrap;
+  }
+
+  .byte {
+    color: var(--color-mango);
+  }
+
+  nav ul {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  nav a {
+    display: inline-block;
+    padding-block: var(--space-2xs);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    color: var(--color-muted);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color var(--duration-fast) ease-out, border-color var(--duration-fast) ease-out;
+  }
+
+  nav a:hover {
+    color: var(--color-ink);
+  }
+
+  nav a[aria-current="true"] {
+    color: var(--color-leaf);
+    border-color: var(--color-leaf);
+  }
+
+  @media (max-width: 640px) {
+    nav ul {
+      gap: var(--space-md);
+    }
+  }
+</style>
