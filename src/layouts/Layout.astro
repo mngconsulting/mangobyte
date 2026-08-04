@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { site } from "../data/site";
+import { founders } from "../data/founders";
 
 interface Props {
   title?: string;
@@ -9,33 +10,97 @@ interface Props {
 
 const { title = `${site.name} — ${site.tagline}`, description = site.description } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, site.url);
+
+// Structured data for search engines and AI answer engines (Google AI Overviews,
+// Perplexity, ChatGPT search). A ProfessionalService with named founders and an
+// explicit service catalog is what these systems parse to describe the company.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": `${site.url}/#organization`,
+  name: site.name,
+  alternateName: "MangoByte Studio",
+  url: site.url,
+  description: site.description,
+  slogan: site.tagline,
+  email: site.contactEmail,
+  knowsAbout: site.keywords,
+  areaServed: { "@type": "Country", name: "Worldwide" },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: site.city,
+    addressRegion: site.region,
+    addressCountry: site.country,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: site.geo.latitude,
+    longitude: site.geo.longitude,
+  },
+  founder: founders.map((f) => ({
+    "@type": "Person",
+    name: f.name,
+    jobTitle: f.headline,
+    knowsAbout: f.stack,
+    email: f.email,
+  })),
+  numberOfEmployees: { "@type": "QuantitativeValue", value: founders.length },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Software development and DevOps",
+    itemListElement: site.services.map((service) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: service },
+    })),
+  },
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={site.keywords.join(", ")} />
+    <meta name="author" content={site.name} />
+
+    <!-- Crawler directives: allow full indexing by search + AI answer engines. -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- Geo signals -->
+    <meta name="geo.region" content={`${site.country}-${site.region}`} />
+    <meta name="geo.placename" content={site.city} />
+    <meta name="geo.position" content={`${site.geo.latitude};${site.geo.longitude}`} />
+    <meta name="ICBM" content={`${site.geo.latitude}, ${site.geo.longitude}`} />
 
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL("/og-image.png", site.url)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL("/og-image.png", site.url)} />
+    <meta name="twitter:image:alt" content={`${site.name} — ${site.tagline}`} />
 
     <meta name="theme-color" content="#191410" />
+
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>

@@ -29,7 +29,7 @@ const { founder } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    padding: var(--space-lg);
+    padding: clamp(var(--space-md), 4vw, var(--space-lg));
     background: var(--color-surface);
     border-radius: var(--radius-md);
   }
@@ -84,15 +84,21 @@ const { founder } = Astro.props;
   }
 
   .founder-email {
-    margin-top: var(--space-xs);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: var(--space-2xs);
     font-family: var(--font-mono);
     font-size: var(--text-small);
     color: var(--color-mango);
     text-decoration: none;
     width: fit-content;
+    word-break: break-word;
   }
 
-  .founder-email:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    .founder-email:hover {
+      text-decoration: underline;
+    }
   }
 </style>

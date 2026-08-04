@@ -55,6 +55,9 @@ import { site } from "../data/site";
 
   .mail-cta {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
     margin-top: var(--space-lg);
     padding: 0.875rem 2rem;
     border-radius: var(--radius-sm);
@@ -62,13 +65,20 @@ import { site } from "../data/site";
     color: var(--on-mango);
     font-weight: 600;
     text-decoration: none;
+    word-break: break-word;
     transition: box-shadow var(--duration-base) var(--ease-out-expo),
       transform var(--duration-base) var(--ease-out-expo);
   }
 
-  .mail-cta:hover {
-    box-shadow: var(--shadow-cta-hover);
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .mail-cta:hover {
+      box-shadow: var(--shadow-cta-hover);
+      transform: translateY(-1px);
+    }
+  }
+
+  .mail-cta:active {
+    transform: translateY(0);
   }
 
   .direct-emails {
@@ -93,19 +103,26 @@ import { site } from "../data/site";
   }
 
   .direct-emails a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     font-family: var(--font-mono);
     font-size: var(--text-small);
     color: var(--color-leaf);
     text-decoration: none;
+    word-break: break-word;
   }
 
-  .direct-emails a:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    .direct-emails a:hover {
+      text-decoration: underline;
+    }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 40rem) {
     .contact-inner {
       grid-template-columns: 1fr;
+      gap: var(--space-xl);
     }
   }
 </style>
