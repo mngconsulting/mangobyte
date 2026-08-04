@@ -7,7 +7,7 @@ export const site = {
   location: "Cluj, Romania",
   contactEmail: "hello@mngconsulting.tech",
   foundedExperience: "7 years combined",
-  url: "https://mngconsulting.tech",
+  url: "https://www.mngconsulting.tech",
 };
 
 export const nav = [
