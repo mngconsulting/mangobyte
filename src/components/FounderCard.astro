@@ -29,7 +29,7 @@ const { founder } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
-    padding: var(--space-lg);
+    padding: clamp(var(--space-md), 4vw, var(--space-lg));
     background: var(--color-surface);
     border-radius: var(--radius-md);
   }
@@ -77,22 +77,32 @@ const { founder } = Astro.props;
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.01em;
-    color: var(--color-leaf);
-    background: color-mix(in oklch, var(--color-leaf) 14%, transparent);
+    color: var(--color-ink);
+    background: var(--color-surface-raised);
+    border: 1px solid var(--color-border);
     padding: 0.3rem 0.6rem;
     border-radius: var(--radius-sm);
   }
 
   .founder-email {
-    margin-top: var(--space-xs);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: var(--space-2xs);
     font-family: var(--font-mono);
     font-size: var(--text-small);
-    color: var(--color-mango);
-    text-decoration: none;
+    color: var(--color-leaf);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in oklch, var(--color-leaf) 45%, transparent);
     width: fit-content;
+    word-break: break-word;
+    transition: text-decoration-color var(--duration-fast) ease-out;
   }
 
-  .founder-email:hover {
-    text-decoration: underline;
+  @media (hover: hover) {
+    .founder-email:hover {
+      text-decoration-color: var(--color-leaf);
+    }
   }
 </style>

@@ -56,14 +56,16 @@ import { nav, site } from "../data/site";
     background: color-mix(in oklch, var(--color-bg) 88%, transparent);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--color-border);
+    padding-top: env(safe-area-inset-top);
   }
 
   .bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-md);
-    padding-block: var(--space-sm);
+    gap: var(--space-sm) var(--space-md);
+    min-height: var(--header-height);
+    padding-block: var(--space-2xs);
   }
 
   .wordmark {
@@ -81,21 +83,17 @@ import { nav, site } from "../data/site";
 
   nav ul {
     display: flex;
-    gap: var(--space-lg);
+    gap: var(--space-md);
     list-style: none;
     margin: 0;
     padding: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  nav ul::-webkit-scrollbar {
-    display: none;
   }
 
   nav a {
-    display: inline-block;
-    padding-block: var(--space-2xs);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: var(--space-3xs);
     font-family: var(--font-mono);
     font-size: var(--text-small);
     letter-spacing: 0.01em;
@@ -106,18 +104,59 @@ import { nav, site } from "../data/site";
     transition: color var(--duration-fast) ease-out, border-color var(--duration-fast) ease-out;
   }
 
-  nav a:hover {
+  @media (hover: hover) {
+    nav a:hover {
+      color: var(--color-ink);
+    }
+  }
+
+  nav a:active {
     color: var(--color-ink);
   }
 
   nav a[aria-current="true"] {
-    color: var(--color-leaf);
-    border-color: var(--color-leaf);
+    color: var(--color-mango);
+    border-color: var(--color-mango);
   }
 
-  @media (max-width: 640px) {
+  /* Below the width where the wordmark + inline nav fit together, the nav drops
+     to its own full-width row so every link stays visible — no hidden menu, no
+     clipped "Contact". */
+  @media (max-width: 34rem) {
+    .bar {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 0;
+      padding-block: var(--space-2xs);
+    }
+
+    .wordmark {
+      flex: 1 0 100%;
+      text-align: center;
+      padding-top: var(--space-2xs);
+    }
+
+    nav {
+      flex: 1 0 100%;
+    }
+
     nav ul {
-      gap: var(--space-md);
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+
+    nav a {
+      min-height: 40px;
+    }
+  }
+
+  @media (max-width: 22rem) {
+    nav ul {
+      gap: var(--space-2xs);
+    }
+
+    nav a {
+      font-size: var(--text-label);
     }
   }
 </style>
