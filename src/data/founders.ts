@@ -20,7 +20,7 @@ export const founders: Founder[] = [
   },
   {
     name: "Vlad",
-    initials: "V",
+    initials: "VB",
     role: "DevOps & Infrastructure",
     headline: "DevOps engineer",
     bio: "Azure has been home turf for most of his career — designing and running the infrastructure that keeps other people's software online — and he's currently extending that into AWS, so the studio isn't tied to one cloud.",

@@ -15,11 +15,15 @@
   --color-muted: oklch(0.68 0.02 38);
   --color-border: oklch(1 0 0 / 0.1);
 
-  /* Mango sits at L 0.66 / chroma 0.16 — mid-luminance + saturated, so it needs
-     light text on it (Helmholtz-Kohlrausch), not dark. */
-  --on-mango: oklch(0.99 0 0);
-  --mango-fill: linear-gradient(135deg, var(--color-mango-deep), var(--color-mango) 55%, var(--color-mango-gold));
-  --mango-fill-hover: linear-gradient(135deg, var(--color-mango), var(--color-mango-bright) 55%, var(--color-mango-gold));
+  /* Dark ink on the mango fill: clears 4.5:1 across the whole gradient range
+     (deep L0.60 → mango L0.66). DESIGN.md's button spec anticipated this fallback. */
+  --on-mango: oklch(0.12 0 0);
+  /* A ripe-mango sweep from deep coral to bright flesh — keeps the old button's
+     dimension and warmth, but the bright end stops at hue 52 (mango), never
+     reaching the hue-78 gold that made the original read as a fruit-stand /
+     AI-template gradient. Dark ink clears 4.5:1 across the whole range. */
+  --mango-fill: linear-gradient(135deg, oklch(0.6 0.17 34), oklch(0.78 0.13 52));
+  --mango-fill-hover: linear-gradient(135deg, oklch(0.65 0.17 36), oklch(0.82 0.12 56));
 
   /* Type */
   --font-display: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;

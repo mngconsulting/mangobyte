@@ -10,10 +10,16 @@ import { site } from "../data/site";
         <h2>Say hello</h2>
         <p class="prose-measure">
           No forms, no funnels — just tell us what you're building or what's breaking.
+          We usually reply within a day.
         </p>
-        <a class="mail-cta" href={`mailto:${site.contactEmail}`}>
-          {site.contactEmail}
-        </a>
+        <div class="mail-actions">
+          <a class="mail-cta" href={`mailto:${site.contactEmail}`}>
+            {site.contactEmail}
+          </a>
+          <button type="button" class="copy-btn" data-copy={site.contactEmail}>
+            <span class="copy-label">Copy</span>
+          </button>
+        </div>
       </div>
       <ul class="direct-emails" aria-label="Direct contact for each founder">
         {
@@ -28,6 +34,34 @@ import { site } from "../data/site";
     </div>
   </div>
 </section>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>(".copy-btn");
+  const label = btn?.querySelector<HTMLElement>(".copy-label");
+
+  if (btn && label && navigator.clipboard) {
+    let resetTimer: number | undefined;
+    btn.addEventListener("click", async () => {
+      const email = btn.dataset.copy;
+      if (!email) return;
+      try {
+        await navigator.clipboard.writeText(email);
+        label.textContent = "Copied";
+        btn.classList.add("is-copied");
+        window.clearTimeout(resetTimer);
+        resetTimer = window.setTimeout(() => {
+          label.textContent = "Copy";
+          btn.classList.remove("is-copied");
+        }, 2000);
+      } catch {
+        label.textContent = "Press ⌘C";
+      }
+    });
+  } else if (btn) {
+    // No async clipboard available — the mailto link still works, so hide the button.
+    btn.hidden = true;
+  }
+</script>
 
 <style>
   .contact {
@@ -53,12 +87,19 @@ import { site } from "../data/site";
     font-size: 1.05rem;
   }
 
+  .mail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+  }
+
   .mail-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 48px;
-    margin-top: var(--space-lg);
     padding: 0.875rem 2rem;
     border-radius: var(--radius-sm);
     background: var(--mango-fill);
@@ -67,18 +108,47 @@ import { site } from "../data/site";
     text-decoration: none;
     word-break: break-word;
     transition: box-shadow var(--duration-base) var(--ease-out-expo),
-      transform var(--duration-base) var(--ease-out-expo);
+      transform var(--duration-base) var(--ease-out-expo), background var(--duration-fast) ease-out;
   }
 
   @media (hover: hover) {
     .mail-cta:hover {
       box-shadow: var(--shadow-cta-hover);
       transform: translateY(-1px);
+      background: var(--mango-fill-hover);
     }
   }
 
   .mail-cta:active {
     transform: translateY(0);
+  }
+
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.875rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--text-small);
+    cursor: pointer;
+    transition: color var(--duration-fast) ease-out, border-color var(--duration-fast) ease-out;
+  }
+
+  @media (hover: hover) {
+    .copy-btn:hover {
+      color: var(--color-ink);
+      border-color: var(--color-muted);
+    }
+  }
+
+  .copy-btn.is-copied {
+    color: var(--color-leaf);
+    border-color: color-mix(in oklch, var(--color-leaf) 40%, var(--color-border));
   }
 
   .direct-emails {
@@ -109,13 +179,16 @@ import { site } from "../data/site";
     font-family: var(--font-mono);
     font-size: var(--text-small);
     color: var(--color-leaf);
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-color: color-mix(in oklch, var(--color-leaf) 45%, transparent);
     word-break: break-word;
+    transition: text-decoration-color var(--duration-fast) ease-out;
   }
 
   @media (hover: hover) {
     .direct-emails a:hover {
-      text-decoration: underline;
+      text-decoration-color: var(--color-leaf);
     }
   }
 
