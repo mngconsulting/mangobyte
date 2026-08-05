@@ -9,7 +9,7 @@ export const site = {
   region: "Cluj",
   country: "RO",
   geo: { latitude: 46.7712, longitude: 23.6236 },
-  contactEmail: "hello@mngconsulting.tech",
+  contactEmail: "contact@mngconsulting.tech",
   foundedExperience: "7 years combined",
   url: "https://www.mngconsulting.tech",
   keywords: [
